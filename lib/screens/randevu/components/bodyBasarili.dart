@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:tanlas/constants.dart';
 import 'package:tanlas/models/mysql.dart';
-import 'package:tanlas/screens/ayarlar/ayarlar.dart';
 import 'package:tanlas/screens/header_icerik.dart';
 
 class BodyBasarili extends StatefulWidget {

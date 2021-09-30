@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tanlas/constants.dart';
-import 'package:tanlas/models/oturum.dart';
-import 'package:tanlas/models/oturumdao.dart';
 import 'package:tanlas/screens/home/components/home_screen.dart';
 
 void main() {

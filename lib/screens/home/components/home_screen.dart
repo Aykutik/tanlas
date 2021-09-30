@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tanlas/models/mysql.dart';
 import 'package:tanlas/models/oturumdao.dart';
-import 'package:tanlas/screens/appBar.dart';
 import 'package:tanlas/screens/ayarlar/ayarlar.dart';
 import 'package:tanlas/screens/giris/girisEkrani.dart';
 import 'package:tanlas/screens/home/components/body.dart';

@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tanlas/constants.dart';
 import 'package:tanlas/models/mysql.dart';
 import 'package:tanlas/models/oturumdao.dart';
 import 'package:tanlas/screens/appBar.dart';
+import 'package:tanlas/screens/giris/kayitEkrani.dart';
+import 'package:tanlas/screens/home/components/header.dart';
 import 'package:tanlas/screens/home/components/home_screen.dart';
 
 class girisEkrani extends StatefulWidget {
   // This widget is the root of your application.
-
   @override
   _girisEkraniState createState() => _girisEkraniState();
 }
@@ -15,6 +17,7 @@ class girisEkrani extends StatefulWidget {
 class _girisEkraniState extends State<girisEkrani> {
   late TextEditingController telctrl, pasctrl;
   var db = new Mysql();
+  bool parolaDurumu = true;
 
   void initState() {
     // TODO: implement initState
@@ -23,8 +26,91 @@ class _girisEkraniState extends State<girisEkrani> {
     pasctrl = new TextEditingController();
   }
 
-  Future<void> oturumAc(musteriid) async {
-    await Oturumdao().oturumkAYDET(musteriid);
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: ApplicationToolbar("0", ""),
+      body: Column(
+        children: [
+          Header(size: size),
+          //tel no
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: SizedBox(
+              width: 300,
+              child: TextField(
+                controller: telctrl,
+                style: TextStyle(color: kTextColor_icerik),
+                obscureText: false,
+                decoration: InputDecoration(
+                    labelText: "Telefon Numaranız",
+                    prefixIcon: Icon(Icons.contact_phone_outlined),
+                    hintText: "0541564....",
+                    border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: SizedBox(
+              width: 300,
+              child: TextField(
+                controller: pasctrl,
+                style: TextStyle(color: kTextColor_icerik),
+                obscureText: parolaDurumu,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.vpn_key_outlined),
+                    hintText: "Parolanız...",
+                    suffixIcon: IconButton(
+                      icon: parolaDurumu
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                      onPressed: () =>
+                          setState(() => parolaDurumu = !parolaDurumu),
+                    )),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 80,
+            child: ElevatedButton(
+              child: Text("Giriş"),
+              onPressed: () {
+                _girisKontrol();
+                //_girisKontrol2();
+              },
+            ),
+          ),
+          Row(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SizedBox(
+                    width: 300,
+                    child: GestureDetector(
+                      child: Text(
+                        "Hesabınız yoksa buradan kayıt olabilirsiniz!",
+                        style: TextStyle(color: kTextColor_icerik),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => kayitEkrani()));
+                      },
+                    ),
+                  ),
+                ),
+              ])
+        ],
+      ),
+    );
   }
 
   void _girisKontrol() {
@@ -66,48 +152,7 @@ class _girisEkraniState extends State<girisEkrani> {
     });
   }
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ApplicationToolbar("0", ""),
-      body: Column(
-        children: [
-          //tel no
-          SizedBox(
-            width: 300,
-            child: TextField(
-              controller: telctrl,
-              obscureText: false,
-              decoration: InputDecoration(
-                icon: Icon(Icons.contact_phone_outlined),
-                hintText: "0541564....",
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 300,
-            child: TextField(
-              controller: pasctrl,
-              obscureText: true,
-              decoration: InputDecoration(
-                icon: Icon(Icons.vpn_key_outlined),
-                hintText: "Parolanız...",
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 80,
-            child: ElevatedButton(
-              child: Text("Giriş"),
-              onPressed: () {
-                _girisKontrol();
-                //_girisKontrol2();
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+  Future<void> oturumAc(musteriid) async {
+    await Oturumdao().oturumkAYDET(musteriid);
   }
 }

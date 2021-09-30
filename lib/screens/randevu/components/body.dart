@@ -76,8 +76,8 @@ class _BodyState extends State<Body> {
                   Padding(
                     padding: const EdgeInsets.only(left: kDefultPadding),
                     child: SizedBox(
-                      width: 100,
-                      height: 25,
+                      width: 150,
+                      height: 30,
                       child: TextField(
                         controller: rntarih,
                         style: TextStyle(color: kTextColor_icerik),
@@ -85,9 +85,14 @@ class _BodyState extends State<Body> {
                           selectTimePicker(context);
                         },
                         decoration: InputDecoration(
-                          hintText: "Tarih Giriniz",
-                          hintStyle: TextStyle(color: kTextColor_icerik),
-                        ),
+                            border: OutlineInputBorder(),
+                            labelText: "Tarih Seçiniz",
+                            hintStyle: TextStyle(color: kTextColor_icerik),
+                            prefixIcon:
+                                Icon(Icons.date_range, 
+                                color: Colors.))),
+                        keyboardType: TextInputType.none,
+                        textInputAction: TextInputAction.done,
                       ),
                     ),
                   ),
