@@ -22,7 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     oturumGoster();
-    _getMusteriAd();
+    Future.delayed(Duration(milliseconds: 200), () {
+      // Do something
+
+      _getMusteriAd();
+    });
   }
 
   Future<void> oturumGoster() async {
@@ -68,20 +72,33 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         leadingWidth: 20,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                giris(musteriid, musteriad),
-              ],
-            )
-          ],
+        title: GestureDetector(
+          onTap: () {
+            if (musteriid != "0") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Ayarlar(musteriid, musteriad)));
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => girisEkrani()));
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  giris(musteriid, musteriad),
+                ],
+              )
+            ],
+          ),
         ),
         elevation: 0,
       ),

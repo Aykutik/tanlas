@@ -26,20 +26,33 @@ class ApplicationToolbar extends StatelessWidget with PreferredSizeWidget {
         },
       ),
       leadingWidth: 20,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              giris(musteriid, musteriad),
-            ],
-          )
-        ],
+      title: GestureDetector(
+        onTap: () {
+          if (musteriid != "0") {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Ayarlar(musteriid, musteriad)));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => girisEkrani()));
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                giris(musteriid, musteriad),
+              ],
+            )
+          ],
+        ),
       ),
       elevation: 0,
     );

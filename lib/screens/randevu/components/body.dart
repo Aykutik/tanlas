@@ -88,9 +88,8 @@ class _BodyState extends State<Body> {
                             border: OutlineInputBorder(),
                             labelText: "Tarih Seçiniz",
                             hintStyle: TextStyle(color: kTextColor_icerik),
-                            prefixIcon:
-                                Icon(Icons.date_range, 
-                                color: Colors.))),
+                            prefixIcon: Icon(Icons.date_range,
+                                color: Colors.blueAccent)),
                         keyboardType: TextInputType.none,
                         textInputAction: TextInputAction.done,
                       ),

@@ -122,7 +122,7 @@ class _girisEkraniState extends State<girisEkrani> {
         if (results.isEmpty != true) {
           for (var row in results) {
             // şifre doğru gerekeni yap....
-            musteriid = row[5].toString();
+            musteriid = row["id"].toString();
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => HomeScreen()));
             oturumAc(musteriid);
