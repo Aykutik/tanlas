@@ -12,7 +12,6 @@ class veritabaniYardimcisi {
 
     if (await databaseExists(veritabaniyolu)) {
       print("Veri tabanı zaten var kopyalamaya gerek yok.");
-      print("veritabanı kopyalandı");
     } else {
       ByteData data = await rootBundle.load("assets/veritabani/$veritabaniAdi");
       List<int> bytes =

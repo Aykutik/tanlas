@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tanlas/constants.dart';
 import 'package:tanlas/models/mysql.dart';
 import 'package:tanlas/models/oturumdao.dart';
 import 'package:tanlas/screens/ayarlar/ayarlar.dart';
@@ -57,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         leading: IconButton(
           icon: Icon(Icons.person_pin),
           onPressed: () {

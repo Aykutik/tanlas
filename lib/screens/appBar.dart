@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tanlas/constants.dart';
 import 'package:tanlas/screens/ayarlar/ayarlar.dart';
 import 'package:tanlas/screens/giris/girisEkrani.dart';
 
@@ -11,21 +12,7 @@ class ApplicationToolbar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.person_pin),
-        onPressed: () {
-          if (musteriid != "0") {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Ayarlar(musteriid, musteriad)));
-          } else {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => girisEkrani()));
-          }
-        },
-      ),
-      leadingWidth: 20,
+      backgroundColor: kPrimaryColor,
       title: GestureDetector(
         onTap: () {
           if (musteriid != "0") {
@@ -39,16 +26,38 @@ class ApplicationToolbar extends StatelessWidget with PreferredSizeWidget {
           }
         },
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 giris(musteriid, musteriad),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.person_pin),
+                  onPressed: () {
+                    if (musteriid != "0") {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Ayarlar(musteriid, musteriad)));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => girisEkrani()));
+                    }
+                  },
+                ),
               ],
             )
           ],

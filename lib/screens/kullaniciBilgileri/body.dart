@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 import 'package:tanlas/constants.dart';
-import 'package:tanlas/kullanicibilgileriDuzenle.dart';
 import 'package:tanlas/models/mysql.dart';
 import 'package:tanlas/screens/header_icerik.dart';
+import 'package:tanlas/screens/kullaniciBilgileri/kullaniciBilgileriDuzenle.dart';
 
 class Body extends StatefulWidget {
   String musteriid;
@@ -21,9 +22,26 @@ class musteriGetir extends StatelessWidget {
   var musteritelefon;
   var musteriparola;
   var musteriid;
+  var lastikMarka;
+  var jantcap;
+  var taban;
+  var kesitorani;
+  var hizKodu;
+  var yuzendeks;
+  var mevsim;
 
-  musteriGetir(this.musteriadsoyad, this.musteritelefon, this.musteriparola,
-      this.musteriid);
+  musteriGetir(
+      this.musteriadsoyad,
+      this.musteritelefon,
+      this.musteriparola,
+      this.musteriid,
+      this.lastikMarka,
+      this.jantcap,
+      this.taban,
+      this.kesitorani,
+      this.hizKodu,
+      this.yuzendeks,
+      this.mevsim);
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +118,18 @@ class musteriGetir extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => KullanicibilgileriDuzenle(
+                                builder: (context) => KullaniciBilgileriDuzenle(
                                     musteriid,
                                     musteriadsoyad,
                                     musteritelefon,
-                                    musteriparola)));
+                                    musteriparola,
+                                    lastikMarka,
+                                    jantcap,
+                                    taban,
+                                    kesitorani,
+                                    hizKodu,
+                                    yuzendeks,
+                                    mevsim)));
                       })
                 ],
               )
@@ -131,6 +156,15 @@ class _BodyState extends State<Body> {
   var musteriad;
   var musteritel;
   var musteriparola;
+  var lastikMarka;
+  var jantcap;
+  var taban;
+  var kesitorani;
+  var hizKodu;
+  var yuzendeks;
+  var mevsim;
+  var hasan;
+
   var randevuDurum = "5";
   var randevuTarih;
   var randevuSaat;
@@ -145,6 +179,33 @@ class _BodyState extends State<Body> {
           setState(() {
             musteritel = row2["telefon"].toString();
             musteriparola = row2["parola"].toString();
+          });
+        }
+      });
+
+      conn.query("SELECT jantcap from tanim_lastik").then((results) {
+        List<Map<String, dynamic>> maps = results as List<Map<String, dynamic>>;
+        List.generate(maps.length, (i) {
+          var satir = maps[i];
+          setState(() {
+            hasan = satir[1].toString();
+          });
+        });
+      });
+
+      conn
+          .query(
+              'select *from musteri_arac_lastik where lastikno="1" and musteriid="${widget.musteriid.toString()}"')
+          .then((results) {
+        for (var row3 in results) {
+          setState(() {
+            lastikMarka = row3["marka"].toString();
+            jantcap = row3["jantcap"].toString();
+            taban = row3["tabangenislik"].toString();
+            kesitorani = row3["kesitoran"].toString();
+            hizKodu = row3["hizkodu"].toString();
+            yuzendeks = row3["yuzendeks"].toString();
+            mevsim = row3["mevsim"].toString();
           });
         }
       });
@@ -165,11 +226,29 @@ class _BodyState extends State<Body> {
         child: Column(
       children: <Widget>[
         Header_icerik(size: size),
+        ListTile(
+          title: hasan,
+            : kTextColor_icerik,
+        ),
+        Text(
+          hasan.toString(),
+          style: TextStyle(color: kTextColor_icerik),
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             musteriGetir(
-                widget.musteriad, musteritel, musteriparola, widget.musteriid),
+                widget.musteriad,
+                musteritel,
+                musteriparola,
+                widget.musteriid,
+                lastikMarka,
+                jantcap,
+                taban,
+                kesitorani,
+                hizKodu,
+                yuzendeks,
+                mevsim),
           ],
         ),
       ],
