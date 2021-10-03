@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:tanlas/constants.dart';
 import 'package:tanlas/models/mysql.dart';
@@ -16,154 +17,32 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
-class musteriGetir extends StatelessWidget {
-  var db = new Mysql();
-  var musteriadsoyad;
-  var musteritelefon;
-  var musteriparola;
-  var musteriid;
-  var lastikMarka;
-  var jantcap;
-  var taban;
-  var kesitorani;
-  var hizKodu;
-  var yuzendeks;
-  var mevsim;
-
-  musteriGetir(
-      this.musteriadsoyad,
-      this.musteritelefon,
-      this.musteriparola,
-      this.musteriid,
-      this.lastikMarka,
-      this.jantcap,
-      this.taban,
-      this.kesitorani,
-      this.hizKodu,
-      this.yuzendeks,
-      this.mevsim);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      "Ad Soyad :",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: kTextColor_icerik),
-                    ),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      " ${musteriadsoyad.toString()}",
-                      style: TextStyle(fontSize: 18, color: kTextColor_icerik),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      "Telefon :",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: kTextColor_icerik),
-                    ),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      " ${musteritelefon.toString()}",
-                      style: TextStyle(fontSize: 18, color: kTextColor_icerik),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ElevatedButton(
-                      child: Text("Bilgileri Düzenle"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => KullaniciBilgileriDuzenle(
-                                    musteriid,
-                                    musteriadsoyad,
-                                    musteritelefon,
-                                    musteriparola,
-                                    lastikMarka,
-                                    jantcap,
-                                    taban,
-                                    kesitorani,
-                                    hizKodu,
-                                    yuzendeks,
-                                    mevsim)));
-                      })
-                ],
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class _BodyState extends State<Body> {
   void initState() {
     // TODO: implement initState
     super.initState();
     // Do something
-    Future.delayed(Duration(milliseconds: 225), () {
+    Future.delayed(Duration(milliseconds: 50), () {
       // Do something
       _getKullanici();
     });
   }
 
   var db = new Mysql();
-  var musteriad;
   var musteritel;
   var musteriparola;
-  var lastikMarka;
-  var jantcap;
-  var taban;
-  var kesitorani;
-  var hizKodu;
-  var yuzendeks;
-  var mevsim;
-  var hasan;
+  var lastikMarka = "";
+  var jantcap = "";
+  var taban = "";
+  var kesitorani = "";
+  var hizKodu = "";
+  var yuzendeks = "";
+  var mevsim = "";
+
+  var arac = "";
+  var marka = "";
+  var seri = "";
+  var model = "";
 
   var randevuDurum = "5";
   var randevuTarih;
@@ -183,23 +62,27 @@ class _BodyState extends State<Body> {
         }
       });
 
-      conn.query("SELECT jantcap from tanim_lastik").then((results) {
-        List<Map<String, dynamic>> maps = results as List<Map<String, dynamic>>;
-        List.generate(maps.length, (i) {
-          var satir = maps[i];
+      conn
+          .query(
+              'select *from musteriarac where musteriid="${widget.musteriid.toString()}"')
+          .then((results) {
+        for (var row2 in results) {
           setState(() {
-            hasan = satir[1].toString();
+            arac = row2["arac"].toString();
+            marka = row2["marka"].toString();
+            seri = row2["seri"].toString();
+            model = row2["model"].toString();
           });
-        });
+        }
       });
 
       conn
           .query(
-              'select *from musteri_arac_lastik where lastikno="1" and musteriid="${widget.musteriid.toString()}"')
+              'select *from musteri_arac_lastik where musteriid="${widget.musteriid.toString()}"')
           .then((results) {
         for (var row3 in results) {
           setState(() {
-            lastikMarka = row3["marka"].toString();
+            lastikMarka = row3["lastikmarka"].toString();
             jantcap = row3["jantcap"].toString();
             taban = row3["tabangenislik"].toString();
             kesitorani = row3["kesitoran"].toString();
@@ -226,32 +109,187 @@ class _BodyState extends State<Body> {
         child: Column(
       children: <Widget>[
         Header_icerik(size: size),
-        ListTile(
-          title: hasan,
-            : kTextColor_icerik,
-        ),
-        Text(
-          hasan.toString(),
-          style: TextStyle(color: kTextColor_icerik),
-        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            musteriGetir(
-                widget.musteriad,
-                musteritel,
-                musteriparola,
-                widget.musteriid,
-                lastikMarka,
-                jantcap,
-                taban,
-                kesitorani,
-                hizKodu,
-                yuzendeks,
-                mevsim),
+            baslik(
+              yazi: "Kişisel Bilgileriniz",
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Ad Soyad :",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextColor_icerik),
+                            ),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              " ${widget.musteriad.toString()}",
+                              style: TextStyle(
+                                  fontSize: 18, color: kTextColor_icerik),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "Telefon :",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextColor_icerik),
+                            ),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              " ${musteritel.toString()}",
+                              style: TextStyle(
+                                  fontSize: 18, color: kTextColor_icerik),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ElevatedButton(
+                              child: Text("Bilgileri Düzenle"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            KullaniciBilgileriDuzenle(
+                                                widget.musteriid,
+                                                widget.musteriad,
+                                                musteritel,
+                                                musteriparola,
+                                                lastikMarka,
+                                                jantcap,
+                                                taban,
+                                                kesitorani,
+                                                hizKodu,
+                                                yuzendeks,
+                                                mevsim,
+                                                marka,
+                                                seri,
+                                                model)));
+                              })
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            baslik(
+              yazi: "Aracınızın Bilgileri",
+            ),
+            baslik(
+              yazi: "Lastiğinizin Bilgileri",
+            ),
+            LastikBil(data: lastikMarka, yazi: "Marka : "),
+            LastikBil(data: hizKodu, yazi: "Hız Kodu : "),
+            LastikBil(data: jantcap, yazi: "Jant Çapı : "),
+            LastikBil(data: taban, yazi: "Taban Genişliği : "),
+            LastikBil(data: kesitorani, yazi: "Kesit Oranı : "),
+            LastikBil(data: yuzendeks, yazi: "Yüz Endeks : "),
+            LastikBil(data: mevsim, yazi: "Mevsim : "),
           ],
         ),
       ],
     ));
+  }
+}
+
+class LastikBil extends StatelessWidget {
+  const LastikBil({
+    Key? key,
+    required this.data,
+    required this.yazi,
+  }) : super(key: key);
+
+  final String data;
+  final String yazi;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: kDefultPadding, bottom: kDefultPadding / 2),
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Text(
+                yazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              )
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                data,
+                style: TextStyle(color: kTextColor_icerik, fontSize: 16),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class baslik extends StatelessWidget {
+  const baslik({
+    Key? key,
+    required this.yazi,
+  }) : super(key: key);
+
+  final String yazi;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      yazi,
+      style: TextStyle(
+          color: kTextColor_icerik, fontWeight: FontWeight.bold, fontSize: 20),
+    );
   }
 }
