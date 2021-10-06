@@ -32,8 +32,17 @@ class randevuKontrol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (randevuDurum == "5") {
-      return Text("Aktif randevunuz bulunmamaktadır.",
-          style: TextStyle(color: kTextColor_icerik));
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0, bottom: 20.0),
+            child: Text("Aktif randevunuz bulunmamaktadır.",
+                style: TextStyle(color: kTextColor_icerik)),
+          ),
+          ElevatedButton(onPressed: () {}, child: Text("Ana Sayfa")),
+          ElevatedButton(onPressed: () {}, child: Text("Randevu Al")),
+        ],
+      );
     } else {
       if (randevuDurum == "1") {
         return ListTile(

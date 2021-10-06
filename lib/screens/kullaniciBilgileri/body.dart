@@ -179,56 +179,58 @@ class _BodyState extends State<Body> {
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ElevatedButton(
-                              child: Text("Bilgileri Düzenle"),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            KullaniciBilgileriDuzenle(
-                                                widget.musteriid,
-                                                widget.musteriad,
-                                                musteritel,
-                                                musteriparola,
-                                                lastikMarka,
-                                                jantcap,
-                                                taban,
-                                                kesitorani,
-                                                hizKodu,
-                                                yuzendeks,
-                                                mevsim,
-                                                marka,
-                                                seri,
-                                                model)));
-                              })
-                        ],
-                      )
-                    ],
-                  )
                 ],
               ),
             ),
             baslik(
               yazi: "Aracınızın Bilgileri",
             ),
+            AracBil(data: marka, yazi: "Marka        : "),
+            AracBil(data: seri, yazi: "Seri            : "),
+            AracBil(data: model, yazi: "Model        : "),
             baslik(
               yazi: "Lastiğinizin Bilgileri",
             ),
-            LastikBil(data: lastikMarka, yazi: "Marka : "),
-            LastikBil(data: hizKodu, yazi: "Hız Kodu : "),
-            LastikBil(data: jantcap, yazi: "Jant Çapı : "),
-            LastikBil(data: taban, yazi: "Taban Genişliği : "),
-            LastikBil(data: kesitorani, yazi: "Kesit Oranı : "),
-            LastikBil(data: yuzendeks, yazi: "Yüz Endeks : "),
-            LastikBil(data: mevsim, yazi: "Mevsim : "),
+            LastikBil(data: lastikMarka, yazi: "Marka                      : "),
+            LastikBil(data: jantcap, yazi: "Jant Çapı                : "),
+            LastikBil(data: taban, yazi: "Taban Genişliği     : "),
+            LastikBil(data: kesitorani, yazi: "Kesit Oranı             : "),
+            LastikBil(data: hizKodu, yazi: "Hız Kodu                 : "),
+            LastikBil(data: yuzendeks, yazi: "Yüz Endeks            : "),
+            LastikBil(data: mevsim, yazi: "Mevsim                   : "),
           ],
         ),
+        Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ElevatedButton(
+                    child: Text("Bilgileri Düzenle"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => KullaniciBilgileriDuzenle(
+                                  widget.musteriid,
+                                  widget.musteriad,
+                                  musteritel,
+                                  musteriparola,
+                                  lastikMarka,
+                                  jantcap,
+                                  taban,
+                                  kesitorani,
+                                  hizKodu,
+                                  yuzendeks,
+                                  mevsim,
+                                  marka,
+                                  seri,
+                                  model)));
+                    })
+              ],
+            )
+          ],
+        )
       ],
     ));
   }
@@ -236,6 +238,48 @@ class _BodyState extends State<Body> {
 
 class LastikBil extends StatelessWidget {
   const LastikBil({
+    Key? key,
+    required this.data,
+    required this.yazi,
+  }) : super(key: key);
+
+  final String data;
+  final String yazi;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: kDefultPadding, bottom: kDefultPadding / 2),
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Text(
+                yazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              )
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                data,
+                style: TextStyle(color: kTextColor_icerik, fontSize: 16),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AracBil extends StatelessWidget {
+  const AracBil({
     Key? key,
     required this.data,
     required this.yazi,

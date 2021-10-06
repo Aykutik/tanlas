@@ -318,22 +318,23 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
     var yukseklik = 40.0;
     var padding = 20.0;
 
-    String markaYazi = "Marka";
+    String markaYazi = "Marka                      :";
     String jantCapYazi = "Jant Çap Genişliği :";
-    String tabanYazi = "Taban Genişliği :";
-    String kesitYazi = "Kesit Ölçüsü :";
-    String hizKoduYazi = "Hız Kodu :";
-    String yuzEndeksYazi = "Yüz Endeks";
-    String mevsimYazi = "Mevsim :";
+    String tabanYazi = "Taban Genişliği      :";
+    String kesitYazi = "Kesit Ölçüsü           :";
+    String hizKoduYazi = "Hız Kodu                 :";
+    String yuzEndeksYazi = "Yüz Endeks            :";
+    String mevsimYazi = "Mevsim                   :";
 
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              markaYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(markaYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -373,10 +374,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              jantCapYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(jantCapYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -416,10 +418,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              tabanYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(tabanYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -459,10 +462,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              kesitYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(kesitYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -482,7 +486,7 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
-                        "Marka: $value",
+                        value,
                         style: TextStyle(color: kTextColor_icerik),
                       ),
                     );
@@ -502,10 +506,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              hizKoduYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(hizKoduYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -545,10 +550,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              yuzEndeksYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(yuzEndeksYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -588,10 +594,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              mevsimYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(mevsimYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -641,17 +648,23 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
 
   void setAracBilgileri() {
     db.getConnection().then((conn) {
-      if (_selectedMarka != "" && _selectedMarka != "null") {
+      if (_selectedMarka != "" &&
+          _selectedMarka != "null" &&
+          _selectedMarka != null) {
         conn.query('update musteriarac set marka=? where musteriid=?',
             [_selectedMarka, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedModel != "" && _selectedModel != "null") {
+      if (_selectedModel != "" &&
+          _selectedModel != "null" &&
+          _selectedModel != null) {
         conn.query('update musteriarac set model=? where musteriid=?',
             [_selectedModel, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedSeri != "" && _selectedSeri != "null") {
+      if (_selectedSeri != "" &&
+          _selectedSeri != "null" &&
+          _selectedSeri != null) {
         conn.query('update musteriarac set seri=? where musteriid=?',
             [_selectedSeri, int.parse(widget.musteriid)]);
       }
@@ -660,44 +673,58 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
 
   void setLastikBilgileri() {
     db.getConnection().then((conn) {
-      if (_selectedValueMarka != "" && _selectedValueMarka != "null") {
+      if (_selectedValueMarka != "" &&
+          _selectedValueMarka != "null" &&
+          _selectedValueMarka != null) {
         conn.query(
             'update musteri_arac_lastik set lastikmarka=? where musteriid=?',
             [_selectedValueMarka, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueHizkodu != "" && _selectedValueHizkodu != "null") {
+      if (_selectedValueHizkodu != "" &&
+          _selectedValueHizkodu != "null" &&
+          _selectedValueHizkodu != null) {
         conn.query('update musteri_arac_lastik set hizkodu=? where musteriid=?',
             [_selectedValueHizkodu, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueJantCap != "" && _selectedValueJantCap != "null") {
+      if (_selectedValueJantCap != "" &&
+          _selectedValueJantCap != "null" &&
+          _selectedValueJantCap != null) {
         conn.query('update musteri_arac_lastik set jantcap=? where musteriid=?',
             [_selectedValueJantCap, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueTaban != "" && _selectedValueTaban != "null") {
+      if (_selectedValueTaban != "" &&
+          _selectedValueTaban != "null" &&
+          _selectedValueTaban != null) {
         conn.query(
             'update musteri_arac_lastik set tabangenislik=? where musteriid=?',
             [_selectedValueTaban, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueKesit != "" && _selectedValueKesit != "null") {
+      if (_selectedValueKesit != "" &&
+          _selectedValueKesit != "null" &&
+          _selectedValueKesit != null) {
         conn.query(
             'update musteri_arac_lastik set kesitoran=? where musteriid=?',
             [_selectedValueKesit, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueYuzEndeks != "" && _selectedValueYuzEndeks != "null") {
+      if (_selectedValueYuzEndeks != "" &&
+          _selectedValueYuzEndeks != "null" &&
+          _selectedValueYuzEndeks != null) {
         conn.query(
             'update musteri_arac_lastik set yuzendeks=? where musteriid=?',
             [_selectedValueYuzEndeks, int.parse(widget.musteriid)]);
       }
 
-      if (_selectedValueMevsim != "" && _selectedValueMevsim != "null") {
+      if (_selectedValueMevsim != "" &&
+          _selectedValueMevsim != "null" &&
+          _selectedValueMevsim != null) {
         conn.query('update musteri_arac_lastik set mevsim=? where musteriid=?',
             [_selectedValueMevsim, int.parse(widget.musteriid)]);
-      } //burada kaldım birini değiştirince hepsi değişiyor
+      }
     });
   }
 
@@ -706,18 +733,19 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
     var yukseklik = 40.0;
     var padding = 20.0;
 
-    String markaYazi = "Marka :";
-    String modelYazi = "Model :";
-    String seriYazi = "Seri :";
+    String markaYazi = "Marka   :";
+    String seriYazi = "Seri       :";
+    String modelYazi = "Model   :";
 
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              markaYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(markaYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -757,10 +785,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              seriYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(seriYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
@@ -800,10 +829,11 @@ class _KullaniciBilgileriDuzenleState extends State<KullaniciBilgileriDuzenle> {
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
             padding: EdgeInsets.all(padding),
-            child: Text(
-              modelYazi,
-              style: TextStyle(color: kTextColor_icerik),
-            )),
+            child: Text(modelYazi,
+                style: TextStyle(
+                    color: kTextColor_icerik,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold))),
         Padding(
           padding: EdgeInsets.all(padding / 2),
           child: Column(
