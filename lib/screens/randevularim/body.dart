@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tanlas/constants.dart';
 import 'package:tanlas/models/mysql.dart';
 import 'package:tanlas/screens/header_icerik.dart';
+import 'package:tanlas/screens/home/components/home_screen.dart';
 import 'package:tanlas/screens/randevularim/randevularim.dart';
 
 class Body extends StatefulWidget {
@@ -39,7 +40,12 @@ class randevuKontrol extends StatelessWidget {
             child: Text("Aktif randevunuz bulunmamaktadır.",
                 style: TextStyle(color: kTextColor_icerik)),
           ),
-          ElevatedButton(onPressed: () {}, child: Text("Ana Sayfa")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
+              child: Text("Ana Sayfa")),
           ElevatedButton(onPressed: () {}, child: Text("Randevu Al")),
         ],
       );
